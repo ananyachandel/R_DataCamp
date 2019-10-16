@@ -21,4 +21,4 @@ print(stock.prices[over.23])
 
 print("7) Use a built-in function to find the day the price was the highest")
 max.price <- stock.prices == max(stock.prices)
-print(stock.prices[max.price])
+print(names(stock.prices[max.price]))
