@@ -1,0 +1,29 @@
+---
+title: "_12_1_BasicMap_DataVisualizationGisLeaflet"
+author: "Sobil"
+date: "13/11/2019"
+output: html_document
+---
+
+Basic map creation- 
+Install the leaflet package : install.packages("leaflet")
+
+
+```{r}
+
+library(leaflet)
+
+
+m <- leaflet() %>% 
+  addTiles() %>%     # By default, it add openStreetMap map tiles
+  addMarkers(lng =  77.026634,lat = 28.459497, popup = "My first map with R")
+m
+
+```
+
+
+
+The "leaflet" R package is copyright © 2014-2016 RStudio, Inc.
+The Leaflet JavaScript library is © 2010–2016 Vladimir Agafonkin, 2010–2011 CloudMade.
+Maps © OpenStreetMap contributors unless otherwise noted.
+Content from - https://rstudio.github.io/
