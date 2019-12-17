@@ -1,0 +1,35 @@
+---
+title: "_12_6_GeoJsonTopoJson_DataVisualizationGisLeaflet"
+author: "Sobil"
+date: "18/11/2019"
+output: html_document
+---
+For this exercise install geojsonio package : install.packages("geojsonio")
+
+1 > Reading as sp
+
+```{r}
+library(leaflet)
+library(geojsonio)
+farms <- geojsonio::geojson_read("./bshr_sgmts.geojson", what = "sp")
+# Or use the rgdal equivalent:
+# farms <- rgdal::readOGR("./_12_DataVisualizationGisLeaflet/bshr_sgmts.geojson")
+
+pal <- colorNumeric("RdBu", NULL)
+
+m <- leaflet(data = farms, options = leafletOptions(maxZoom = 17)) %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addProviderTiles(providers$Stamen.TonerLines) %>%
+  addProviderTiles(providers$Stamen.TonerLabels) %>%
+  addPolygons(stroke = TRUE, weight = 1,
+  opacity = 1,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7,
+    fillColor = ~pal(FA_acre),
+    label = farms$
+    Farm_ID) %>%
+  addLegend(pal = pal, values = ~FA_acre, opacity = 1.0)
+m
+```
+
