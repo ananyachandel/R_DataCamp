@@ -1,0 +1,166 @@
+---
+title: "Linear Regression Project"
+output:
+  html_notebook: default
+  word_document: default
+---
+
+For this project you will be doing the Bike Sharing Demand Kaggle challenge!. The main point of this project is to get you feeling comfortabe with Exploratory Data Analysis and begin to get an understanding that sometimes certain models are not a good choice for a data set. In this case, we will discover that Linear Regression may not be the best choice given our data!
+
+## Instructions
+Just complete the tasks outlined below.
+
+## Get the Data
+You can download the data or just use the supplied csv in the repository. The data has the following features:
+
+* datetime - hourly date + timestamp
+* season - 1 = spring, 2 = summer, 3 = fall, 4 = winter
+* holiday - whether the day is considered a holiday
+* workingday - whether the day is neither a weekend nor holiday
+* weather -
+  + 1: Clear, Few clouds, Partly cloudy, Partly cloudy
+  + 2: Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist
+  + 3: Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain + Scattered clouds
+  + 4: Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog
+* temp - temperature in Celsius
+* atemp - "feels like" temperature in Celsius
+* humidity - relative humidity
+* windspeed - wind speed
+* casual - number of non-registered user rentals initiated
+* registered - number of registered user rentals initiated
+* count - number of total rentals
+
+#### Read in bikeshare.csv file and set it to a dataframe called bike.
+```{r}
+remove(list = ls())
+bike <- read.csv('/Users/sobil/Documents/Certifications/DataScienceAndMachineLearningBootcampWithRUdemy/Notes/Training Exercises/Machine Learning Projects/CSV files for ML Projects/bikeshare.csv', stringsAsFactors = FALSE)
+```
+
+#### Check the head of df
+```{r}
+head(bike)
+```
+
+#### Can you figure out what is the target we are trying to predict? Check the Kaggle Link above if you are confused on this.
+```{r}
+str(bike$count)
+```
+## Exploratory Data Analysis
+#### Create a scatter plot of count vs temp. Set a good alpha value.
+
+```{r}
+library(ggplot2)
+ggplot(data = bike, aes(x = temp, y = count)) + geom_point(aes(color = temp, alpha = 0.5))
+```
+
+#### Plot count versus datetime as a scatterplot with a color gradient based on temperature. You'll need to convert the datetime column into POSIXct before plotting.
+
+```{r}
+ggplot(data = bike, aes(x = as.POSIXct(datetime), y = count)) + geom_point(aes(alpha = 0.5, color = temp)) + scale_color_gradient(low = "darkgreen", high = "orange")
+```
+
+#### Noticed two things: A seasonality to the data, for winter and summer. Also that bike rental counts are increasing in general. This may present a problem with using a linear regression model if the data is non-linear. Let's have a quick overview of pros and cons right now of Linear Regression:
+##### Pros:
+* Simple to explain
+* Highly interpretable
+* Model training and prediction are fast
+* No tuning is required (excluding regularization)
+* Features don't need scaling
+* Can perform well with a small number of observations
+* Well-understood
+
+##### Cons:
+* Assumes a linear relationship between the features and the response
+* Performance is (generally) not competitive with the best supervised learning methods due to high bias
+* Can't automatically learn feature interactions
+
+#### We'll keep this in mind as we continue on. Maybe when we learn more algorithms we can come back to this with some new tools, for now we'll stick to Linear Regression.
+
+#### What is the correlation between temp and count?
+```{r}
+cor(bike$temp, bike$count)
+```
+#### Let's explore the season data. Create a boxplot, with the y axis indicating count and the x axis begin a box for each season.
+```{r}
+ggplot(data = bike, aes(y = count, x = factor(season))) + geom_boxplot(aes(color = factor(season)))
+```
+
+#### Notice what this says:
+A line can't capture a non-linear relationship.
+There are more rentals in winter than in spring
+
+##### We know of these issues because of the growth of rental count, this isn't due to the actual season!
+
+## Feature Engineering
+A lot of times you'll need to use domain knowledge and experience to engineer and create new features. Let's go ahead and engineer some new features from the datetime column.
+
+#### Create an "hour" column that takes the hour from the datetime column. You'll probably need to apply some function to the entire datetime column and reassign it. Hint:
+time.stamp <- bike$datetime
+format(time.stamp, "%H")
+```{r}
+bike$hour <- strftime(bike$datetime, format="%H")
+head(bike)
+```
+#### Now create a scatterplot of count versus hour, with color scale based on temp. Only use bike data where workingday==1.
+#### Optional Additions:
+Use the additional layer: scale_color_gradientn(colors=c('color1',color2,etc..)) where the colors argument is a vector gradient of colors you choose, not just high and low.
+Use position=position_jitter(w=1, h=0) inside of geom_point() and check out what it does.
+```{r}
+ggplot(data = subset(x = bike, subset = workingday == 1), aes(x = hour, y = count)) + geom_point(position=position_jitter(w=1, h=0),aes(color = temp), alpha =0.5) + scale_color_gradient2(low = "blue", mid = "green", high = "red")
+```
+#### Now create the same plot for non working days:
+```{r}
+ggplot(data = subset(x = bike, subset = workingday == 0), aes(x = hour, y = count)) + geom_point(position=position_jitter(w=1, h=0),aes(color = temp), alpha =0.5) + scale_color_gradient2(low = "blue", mid = "green", high = "red")
+```
+#### You should have noticed that working days have peak activity during the morning (~8am) and right after work gets out (~5pm), with some lunchtime activity. While the non-work days have a steady rise and fall for the afternoon
+
+#### Now let's continue by trying to build a model, we'll begin by just looking at a single feature.
+
+## Building the Model
+#### Use lm() to build a model that predicts count based solely on the temp feature, name it temp.model
+```{r}
+temp.model <- lm(count ~ temp, data = bike)
+```
+#### Get the summary of the temp.model
+```{r}
+summary(temp.model)
+```
+#### How many bike rentals would we predict if the temperature was 25 degrees Celsius? Calculate this two ways:
+* Using the values we just got above
+* Using the predict() function
+You should get around 235.3 bikes.
+```{r}
+6.0462 + 9.1705*25
+```
+```{r}
+predict(temp.model, data.frame(temp = c(25)))
+```
+#### Use sapply() and as.numeric to change the hour column to a column of numeric values.
+```{r}
+bike$hour <- sapply(bike$hour, as.numeric )
+```
+#### Finally build a model that attempts to predict count based off of the following features. Figure out if theres a way to not have to pass/write all these variables into the lm() function. Hint: StackOverflow or Google may be quicker than the documentation.
+season
+holiday
+workingday
+weather
+temp
+humidity
+windspeed
+hour (factor)
+```{r}
+lm.model <- lm(count ~ . -casual - registered -datetime -atemp,bike)
+```
+#### Get the summary of the model
+```{r}
+summary(lm.model)
+```
+#### Did the model perform well on the training data? What do you think about using a Linear Model on this data?
+
+#### You should have noticed that this sort of model doesn't work well given our seasonal and time series data. We need a model that can account for this type of trend, read about Regression Forests for more info if you're interested! For now, let's keep this in mind as a learning experience and move on towards classification with Logistic Regression!
+
+### ARIMA model can also is better option in predicting time series
+
+#### Optional: See how well you can predict for future data points by creating a train/test split. But instead of a random split, your split should be "future" data for test, "previous" data for train.
+
+## Great Job!
