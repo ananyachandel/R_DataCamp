@@ -1,0 +1,81 @@
+---
+title: "KNN Project"
+output: html_notebook
+---
+# KNN Project
+
+Since KNN is such a simple algorithm, we will just use this "Project" as a simple exercise to test your understanding of the implementation of KNN. By now you should feel comfortable implementing a machine learning algorithm in R, as long as you know what library to use for it.
+So for this project, just follow along with the bolded instructions. It should be very simple, so at the end you'll have an additional optional "bonus" project.
+## Get the Data
+
+## Iris Data Set
+
+We'll use the famous iris data set for this project. It's a small data set with flower features that can be used to attempt to predict the species of an iris flower.
+### Use the ISLR libary to get the iris data set. Check the head of the iris Data Frame.
+```{r}
+remove(list = ls())
+library(ISLR)
+head(iris)
+```
+```{r}
+str(iris)
+```
+## Standardize Data
+
+In this case, the iris data set has all its features in the same order of magnitude, but its good practice (especially with KNN) to standardize features in your data. Lets go ahead and do this even though its not necessary for this data!
+### Use scale() to standardize the feature columns of the iris dataset. Set this standardized version of the data as a new variable.
+```{r}
+stand.features <- scale(iris[1:4])
+```
+### Check that the scaling worked by checking the variance of one of the new columns.
+```{r}
+var(stand.features[,1])
+```
+### Join the standardized data with the response/target/label column (the column with the species names.
+```{r}
+final.data <- cbind(stand.features,iris[5])
+head(final.data)
+```
+## Train and Test Splits
+
+### Use the caTools library to split your standardized data into train and test sets. Use a 70/30 split.
+```{r}
+library(caTools)
+set.seed(101)
+sample <- sample.split(final.data, SplitRatio = 0.70)
+train <- subset(final.data, sample == TRUE)
+test <- subset(final.data, sample == FALSE)
+```
+## Build a KNN model.
+
+### Call the class library.
+```{r}
+library(class)
+```
+### Use the knn function to predict Species of the test set. Use k=1
+```{r}
+predicted.species <- knn(train[1:4], test[1:4], train$Species, k = 1)
+predicted.species
+```
+### What was your misclassification rate?
+```{r}
+mean(predicted.species != test$Species)
+```
+## Choosing a K Value
+
+Although our data is quite small for us to really get a feel for choosing a good K value, let's practice.
+### Create a plot of the error (misclassification) rate for k values ranging from 1 to 10.
+```{r}
+k.values <- 1:10
+error.miss <- NULL
+predict.speccs <- NULL
+for(i in 1:10){
+  predict.speccs <- knn(train[1:4], test[1:4], train$Species, k = i)
+  error.miss[i] <- mean(predict.speccs != test$Species)
+}
+error.miss
+library(ggplot2)
+error.miss.df <- data.frame(error.miss, k.values)
+ggplot(data = error.miss.df, aes(k.values, error.miss)) + geom_point() + geom_line(lty = "dotted", color = "red")
+```
+Thus k = 6 is good !
