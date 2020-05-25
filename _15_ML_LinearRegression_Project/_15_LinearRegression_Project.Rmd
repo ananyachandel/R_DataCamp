@@ -1,6 +1,8 @@
 ---
 title: "Linear Regression Project"
 output:
+  html_document:
+    df_print: paged
   html_notebook: default
   word_document: default
 ---

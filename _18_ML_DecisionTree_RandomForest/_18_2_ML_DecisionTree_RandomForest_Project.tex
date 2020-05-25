@@ -1,0 +1,570 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={Tree Methods Project},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{Tree Methods Project}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\hypertarget{tree-methods-project}{%
+\section{Tree Methods Project}\label{tree-methods-project}}
+
+For this project we will be exploring the use of tree methods to
+classify schools as Private or Public based off their features. Let's
+start by getting the data which is included in the ISLR library, the
+College data frame. A data frame with 777 observations on the following
+18 variables.
+
+\begin{itemize}
+\tightlist
+\item
+  Private A factor with levels No and Yes indicating private or public
+  university
+\item
+  Apps Number of applications received
+\item
+  Accept Number of applications accepted
+\item
+  Enroll Number of new students enrolled
+\item
+  Top10perc Pct. new students from top 10\% of H.S. class
+\item
+  Top25perc Pct. new students from top 25\% of H.S. class
+\item
+  F.Undergrad Number of fulltime undergraduates
+\item
+  P.Undergrad Number of parttime undergraduates
+\item
+  Outstate Out-of-state tuition
+\item
+  Room.Board Room and board costs
+\item
+  Books Estimated book costs
+\item
+  Personal Estimated personal spending
+\item
+  PhD Pct. of faculty with Ph.D.'s
+\item
+  Terminal Pct. of faculty with terminal degree
+\item
+  S.F.Ratio Student/faculty ratio
+\item
+  perc.alumni Pct. alumni who donate
+\item
+  Expend Instructional expenditure per student
+\item
+  Grad.Rate Graduation rate
+\end{itemize}
+
+\hypertarget{get-the-data}{%
+\subsection{Get the Data}\label{get-the-data}}
+
+\hypertarget{call-the-islr-library-and-check-the-head-of-college-a-built-in-data-frame-with-islr-use-data-to-check-this.-then-reassign-college-to-a-dataframe-called-df}{%
+\subsubsection{Call the ISLR library and check the head of College (a
+built-in data frame with ISLR, use data() to check this.) Then reassign
+College to a dataframe called
+df}\label{call-the-islr-library-and-check-the-head-of-college-a-built-in-data-frame-with-islr-use-data-to-check-this.-then-reassign-college-to-a-dataframe-called-df}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{remove}\NormalTok{(}\DataTypeTok{list =} \KeywordTok{ls}\NormalTok{())}
+\KeywordTok{library}\NormalTok{(ISLR)}
+\KeywordTok{head}\NormalTok{(College)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                              Private Apps Accept Enroll Top10perc Top25perc
+## Abilene Christian University     Yes 1660   1232    721        23        52
+## Adelphi University               Yes 2186   1924    512        16        29
+## Adrian College                   Yes 1428   1097    336        22        50
+## Agnes Scott College              Yes  417    349    137        60        89
+## Alaska Pacific University        Yes  193    146     55        16        44
+## Albertson College                Yes  587    479    158        38        62
+##                              F.Undergrad P.Undergrad Outstate Room.Board Books
+## Abilene Christian University        2885         537     7440       3300   450
+## Adelphi University                  2683        1227    12280       6450   750
+## Adrian College                      1036          99    11250       3750   400
+## Agnes Scott College                  510          63    12960       5450   450
+## Alaska Pacific University            249         869     7560       4120   800
+## Albertson College                    678          41    13500       3335   500
+##                              Personal PhD Terminal S.F.Ratio perc.alumni Expend
+## Abilene Christian University     2200  70       78      18.1          12   7041
+## Adelphi University               1500  29       30      12.2          16  10527
+## Adrian College                   1165  53       66      12.9          30   8735
+## Agnes Scott College               875  92       97       7.7          37  19016
+## Alaska Pacific University        1500  76       72      11.9           2  10922
+## Albertson College                 675  67       73       9.4          11   9727
+##                              Grad.Rate
+## Abilene Christian University        60
+## Adelphi University                  56
+## Adrian College                      54
+## Agnes Scott College                 59
+## Alaska Pacific University           15
+## Albertson College                   55
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(College)}
+\KeywordTok{head}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                              Private Apps Accept Enroll Top10perc Top25perc
+## Abilene Christian University     Yes 1660   1232    721        23        52
+## Adelphi University               Yes 2186   1924    512        16        29
+## Adrian College                   Yes 1428   1097    336        22        50
+## Agnes Scott College              Yes  417    349    137        60        89
+## Alaska Pacific University        Yes  193    146     55        16        44
+## Albertson College                Yes  587    479    158        38        62
+##                              F.Undergrad P.Undergrad Outstate Room.Board Books
+## Abilene Christian University        2885         537     7440       3300   450
+## Adelphi University                  2683        1227    12280       6450   750
+## Adrian College                      1036          99    11250       3750   400
+## Agnes Scott College                  510          63    12960       5450   450
+## Alaska Pacific University            249         869     7560       4120   800
+## Albertson College                    678          41    13500       3335   500
+##                              Personal PhD Terminal S.F.Ratio perc.alumni Expend
+## Abilene Christian University     2200  70       78      18.1          12   7041
+## Adelphi University               1500  29       30      12.2          16  10527
+## Adrian College                   1165  53       66      12.9          30   8735
+## Agnes Scott College               875  92       97       7.7          37  19016
+## Alaska Pacific University        1500  76       72      11.9           2  10922
+## Albertson College                 675  67       73       9.4          11   9727
+##                              Grad.Rate
+## Abilene Christian University        60
+## Adelphi University                  56
+## Adrian College                      54
+## Agnes Scott College                 59
+## Alaska Pacific University           15
+## Albertson College                   55
+\end{verbatim}
+
+\hypertarget{eda}{%
+\subsection{EDA}\label{eda}}
+
+Let's explore the data!
+
+\hypertarget{create-a-scatterplot-of-grad.rate-versus-room.board-colored-by-the-private-column.}{%
+\subsubsection{Create a scatterplot of Grad.Rate versus Room.Board,
+colored by the Private
+column.}\label{create-a-scatterplot-of-grad.rate-versus-room.board-colored-by-the-private-column.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ df, }\KeywordTok{aes}\NormalTok{(Room.Board, Grad.Rate)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Private))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_18_2_ML_DecisionTree_RandomForest_Project_files/figure-latex/unnamed-chunk-2-1.pdf}
+\#\#\# Create a histogram of full time undergrad students, color by
+Private.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ df, }\KeywordTok{aes}\NormalTok{(F.Undergrad)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ Private),}\DataTypeTok{color =} \StringTok{'black'}\NormalTok{, }\DataTypeTok{bins =} \DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_18_2_ML_DecisionTree_RandomForest_Project_files/figure-latex/unnamed-chunk-3-1.pdf}
+\#\#\# Create a histogram of Grad.Rate colored by Private. You should
+see something odd here.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ df, }\KeywordTok{aes}\NormalTok{(Grad.Rate)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ Private),}\DataTypeTok{color =} \StringTok{'black'}\NormalTok{, }\DataTypeTok{bins =} \DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_18_2_ML_DecisionTree_RandomForest_Project_files/figure-latex/unnamed-chunk-4-1.pdf}
+\#\#\# What college had a Graduation Rate of above 100\% ?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{subset}\NormalTok{(df,Grad.Rate }\OperatorTok{>}\StringTok{ }\DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   Private Apps Accept Enroll Top10perc Top25perc F.Undergrad
+## Cazenovia College     Yes 3847   3433    527         9        35        1010
+##                   P.Undergrad Outstate Room.Board Books Personal PhD Terminal
+## Cazenovia College          12     9384       4840   600      500  22       47
+##                   S.F.Ratio perc.alumni Expend Grad.Rate
+## Cazenovia College      14.3          20   7697       118
+\end{verbatim}
+
+\hypertarget{change-that-colleges-grad-rate-to-100}{%
+\subsubsection{Change that college's grad rate to
+100\%}\label{change-that-colleges-grad-rate-to-100}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df[}\StringTok{'Cazenovia College'}\NormalTok{, }\StringTok{'Grad.Rate'}\NormalTok{] <-}\StringTok{ }\DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{train-test-split}{%
+\subsection{Train Test Split}\label{train-test-split}}
+
+\hypertarget{split-your-data-into-training-and-testing-sets-7030.-use-the-catools-library-to-do-this.}{%
+\subsubsection{Split your data into training and testing sets 70/30. Use
+the caTools library to do
+this.}\label{split-your-data-into-training-and-testing-sets-7030.-use-the-catools-library-to-do-this.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{101}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(caTools)}
+
+\NormalTok{sample <-}\StringTok{ }\NormalTok{caTools}\OperatorTok{::}\KeywordTok{sample.split}\NormalTok{(df}\OperatorTok{$}\NormalTok{Private, }\DataTypeTok{SplitRatio =} \FloatTok{0.70}\NormalTok{)}
+\NormalTok{train <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(df, sample }\OperatorTok{==}\StringTok{ }\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{test <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(df, sample }\OperatorTok{==}\StringTok{ }\OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{decision-tree}{%
+\subsection{Decision Tree}\label{decision-tree}}
+
+\hypertarget{use-the-rpart-library-to-build-a-decision-tree-to-predict-whether-or-not-a-school-is-private.-remember-to-only-build-your-tree-off-the-training-data.}{%
+\subsubsection{Use the rpart library to build a decision tree to predict
+whether or not a school is Private. Remember to only build your tree off
+the training
+data.}\label{use-the-rpart-library-to-build-a-decision-tree-to-predict-whether-or-not-a-school-is-private.-remember-to-only-build-your-tree-off-the-training-data.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(rpart)}
+\NormalTok{tree.model <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(Private}\OperatorTok{~}\NormalTok{., train, }\DataTypeTok{method =} \StringTok{'class'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{use-predict-to-predict-the-private-label-on-the-test-data.}{%
+\subsubsection{Use predict() to predict the Private label on the test
+data.}\label{use-predict-to-predict-the-private-label-on-the-test-data.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predict.private <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ tree.model, test)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{check-the-head-of-the-predicted-values.-you-should-notice-that-you-actually-have-two-columns-with-the-probabilities.}{%
+\subsubsection{Check the Head of the predicted values. You should notice
+that you actually have two columns with the
+probabilities.}\label{check-the-head-of-the-predicted-values.-you-should-notice-that-you-actually-have-two-columns-with-the-probabilities.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(predict.private)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                                  No       Yes
+## Adrian College                          0.003311258 0.9966887
+## Alfred University                       0.003311258 0.9966887
+## Allegheny College                       0.003311258 0.9966887
+## Allentown Coll. of St. Francis de Sales 0.003311258 0.9966887
+## Alma College                            0.003311258 0.9966887
+## Amherst College                         0.003311258 0.9966887
+\end{verbatim}
+
+\hypertarget{turn-these-two-columns-into-one-column-to-match-the-original-yesno-label-for-a-private-column.}{%
+\subsubsection{Turn these two columns into one column to match the
+original Yes/No Label for a Private
+column.}\label{turn-these-two-columns-into-one-column-to-match-the-original-yesno-label-for-a-private-column.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predict.private <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(predict.private)}
+\CommentTok{# Lots of ways to do this}
+\NormalTok{joiner <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{}
+    \ControlFlowTok{if}\NormalTok{ (x}\OperatorTok{>=}\FloatTok{0.5}\NormalTok{)\{}
+        \KeywordTok{return}\NormalTok{(}\StringTok{'Yes'}\NormalTok{)}
+\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{\{}
+        \KeywordTok{return}\NormalTok{(}\StringTok{"No"}\NormalTok{)}
+\NormalTok{    \}}
+\NormalTok{\}}
+\NormalTok{predict.private}\OperatorTok{$}\NormalTok{Private <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(predict.private}\OperatorTok{$}\NormalTok{Yes,joiner)}
+\KeywordTok{head}\NormalTok{(predict.private)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                                  No       Yes Private
+## Adrian College                          0.003311258 0.9966887     Yes
+## Alfred University                       0.003311258 0.9966887     Yes
+## Allegheny College                       0.003311258 0.9966887     Yes
+## Allentown Coll. of St. Francis de Sales 0.003311258 0.9966887     Yes
+## Alma College                            0.003311258 0.9966887     Yes
+## Amherst College                         0.003311258 0.9966887     Yes
+\end{verbatim}
+
+\hypertarget{now-use-table-to-create-a-confusion-matrix-of-your-tree-model.}{%
+\subsubsection{Now use table() to create a confusion matrix of your tree
+model.}\label{now-use-table-to-create-a-confusion-matrix-of-your-tree-model.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(predict.private}\OperatorTok{$}\NormalTok{Private, test}\OperatorTok{$}\NormalTok{Private)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      
+##        No Yes
+##   No   57   9
+##   Yes   7 160
+\end{verbatim}
+
+\hypertarget{use-the-rpart.plot-library-and-the-prp-function-to-plot-out-your-tree-model.}{%
+\subsubsection{Use the rpart.plot library and the prp() function to plot
+out your tree
+model.}\label{use-the-rpart.plot-library-and-the-prp-function-to-plot-out-your-tree-model.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(rpart.plot)}
+\KeywordTok{prp}\NormalTok{(tree.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_18_2_ML_DecisionTree_RandomForest_Project_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rpart.plot}\NormalTok{(tree.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_18_2_ML_DecisionTree_RandomForest_Project_files/figure-latex/unnamed-chunk-14-1.pdf}
+\#\# Random Forest
+
+Now let's build out a random forest model!
+
+\hypertarget{call-the-randomforest-package-library}{%
+\subsubsection{Call the randomForest package
+library}\label{call-the-randomforest-package-library}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(randomForest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## randomForest 4.6-14
+\end{verbatim}
+
+\begin{verbatim}
+## Type rfNews() to see new features/changes/bug fixes.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'randomForest'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggplot2':
+## 
+##     margin
+\end{verbatim}
+
+\hypertarget{now-use-randomforest-to-build-out-a-model-to-predict-private-class.-add-importancetrue-as-a-parameter-in-the-model.-use-helprandomforest-to-find-out-what-this-does.}{%
+\subsubsection{Now use randomForest() to build out a model to predict
+Private class. Add importance=TRUE as a parameter in the model. (Use
+help(randomForest) to find out what this
+does.}\label{now-use-randomforest-to-build-out-a-model-to-predict-private-class.-add-importancetrue-as-a-parameter-in-the-model.-use-helprandomforest-to-find-out-what-this-does.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rf.model <-}\StringTok{ }\KeywordTok{randomForest}\NormalTok{(Private }\OperatorTok{~}\StringTok{ }\NormalTok{. , }\DataTypeTok{data =}\NormalTok{ train,}\DataTypeTok{importance =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{what-was-your-models-confusion-matrix-on-its-own-training-set-use-modelconfusion.}{%
+\subsubsection{What was your model's confusion matrix on its own
+training set? Use
+model\$confusion.}\label{what-was-your-models-confusion-matrix-on-its-own-training-set-use-modelconfusion.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rf.model}\OperatorTok{$}\NormalTok{confusion}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      No Yes class.error
+## No  125  23  0.15540541
+## Yes  10 386  0.02525253
+\end{verbatim}
+
+\hypertarget{grab-the-feature-importance-with-modelimportance.-refer-to-the-reading-for-more-info-on-what-gini1-means.2}{%
+\subsubsection{Grab the feature importance with model\$importance. Refer
+to the reading for more info on what Gini{[}1{]}
+means.{[}2{]}}\label{grab-the-feature-importance-with-modelimportance.-refer-to-the-reading-for-more-info-on-what-gini1-means.2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rf.model}\OperatorTok{$}\NormalTok{importance}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                       No          Yes MeanDecreaseAccuracy MeanDecreaseGini
+## Apps        0.0299975940 1.581643e-02         0.0195732992         9.093474
+## Accept      0.0265169723 1.359972e-02         0.0169830344        11.252450
+## Enroll      0.0360668986 2.852824e-02         0.0305094654        22.810173
+## Top10perc   0.0094902570 5.700969e-03         0.0067307985         5.535670
+## Top25perc   0.0049996299 2.891095e-03         0.0035060616         4.568160
+## F.Undergrad 0.1591184093 6.945790e-02         0.0937286273        38.842710
+## P.Undergrad 0.0436610506 7.334280e-03         0.0170748529        16.934128
+## Outstate    0.1456738704 6.461743e-02         0.0865178571        42.669650
+## Room.Board  0.0147668601 1.439793e-02         0.0144179025        10.414502
+## Books       0.0007389787 8.914367e-05         0.0002868557         2.203342
+## Personal    0.0029767520 8.632755e-04         0.0014664250         3.710353
+## PhD         0.0086149598 5.320894e-03         0.0061979645         4.624097
+## Terminal    0.0044437470 6.488106e-03         0.0059953078         4.524290
+## S.F.Ratio   0.0302010312 8.307646e-03         0.0142830244        16.017899
+## perc.alumni 0.0166161199 3.455476e-03         0.0071053253         5.280970
+## Expend      0.0235732631 1.270668e-02         0.0155385819         9.860188
+## Grad.Rate   0.0149251559 5.575670e-03         0.0080482732         6.520158
+\end{verbatim}
+
+\hypertarget{predictions}{%
+\subsection{Predictions}\label{predictions}}
+
+\hypertarget{now-use-your-random-forest-model-to-predict-on-your-test-set}{%
+\subsubsection{Now use your random forest model to predict on your test
+set!}\label{now-use-your-random-forest-model-to-predict-on-your-test-set}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(rf.model,test)}
+\KeywordTok{table}\NormalTok{(p,test}\OperatorTok{$}\NormalTok{Private)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      
+## p      No Yes
+##   No   57   6
+##   Yes   7 163
+\end{verbatim}
+
+\hypertarget{it-should-have-performed-better-than-just-a-single-tree-how-much-better-depends-on-whether-you-are-emasuring-recall-precision-or-accuracy-as-the-most-important-measure-of-the-model.}{%
+\paragraph{It should have performed better than just a single tree, how
+much better depends on whether you are emasuring recall, precision, or
+accuracy as the most important measure of the
+model.}\label{it-should-have-performed-better-than-just-a-single-tree-how-much-better-depends-on-whether-you-are-emasuring-recall-precision-or-accuracy-as-the-most-important-measure-of-the-model.}}
+
+\end{document}

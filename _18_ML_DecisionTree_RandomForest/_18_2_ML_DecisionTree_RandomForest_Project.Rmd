@@ -1,6 +1,10 @@
 ---
 title: "Tree Methods Project"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
 ---
 
 # Tree Methods Project
